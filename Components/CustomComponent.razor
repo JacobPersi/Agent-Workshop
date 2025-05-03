@@ -1,0 +1,11 @@
+﻿@code {
+    public Guid Id { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        Id = Guid.NewGuid();
+    }
+}

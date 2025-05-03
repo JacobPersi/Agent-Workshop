@@ -1,23 +1,32 @@
 ﻿@inherits LayoutComponentBase
 
-
-<div class="absolute top-0 left-0 w-full h-full bg-gray-300 flex flex-col">
+<div class="absolute w-screen h-screen flex flex-col bg-red-500">
 
     <div class="w-full h-16">
         Header
     </div>
 
-    <div class="grow flex flex-row">
+    <div class="flex grow flex-row bg-orange-400">
 
-        <div class="h-full w-32 bg-blue-200">
+        <div class="h-full w-32">
             Sidebar
         </div>
 
-        <div class="flex-grow">
-            <TabPanel />
+        <div class="grow">
+            <TabPanel ActiveIndex="0">
+
+                <Tab Title="Tab1">
+                    Tab1
+                </Tab>
+
+                <Tab Title="Tab2">
+                    Tab2
+                </Tab>
+            
+            </TabPanel>
         </div>
 
-        <div class="h-full w-100 bg-blue-200">
+        <div class="h-full w-100">
             Sidebar
         </div>
     </div>

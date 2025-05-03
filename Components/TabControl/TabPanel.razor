@@ -1,0 +1,48 @@
+﻿@inherits CustomComponent
+
+<!-- Tab Control Container -->
+<div class="w-full h-full flex flex-col border-1 rounded-lg overflow-clip">
+  
+    <!-- Tab Selection Bar -->
+    <div class="w-full h-10 flex flex-row border-b-1">
+        @foreach (var tab in Tabs)
+        {
+            <div class="flex-none px-4 py-2 border-r-1 @(ActiveIndex == tab.Index ? "bg-red-300" : "")" @onclick="() => ActivateTab(tab)">
+                @tab.Title
+            </div>
+        }
+    </div>
+
+    <!-- Tab Body -->
+    <div class="flex grow bg-purple-500">
+        <CascadingValue Value="this">
+            @ChildContent
+        </CascadingValue>
+    </div>
+</div>
+
+@code {
+    private static int TabCount = 0;
+
+    [Parameter]
+    public int ActiveIndex { get; set; } = 0;
+
+    public List<Tab> Tabs { get; set; } = new();
+
+    public void RegisterTab(Tab tab)
+    {
+        tab.Index = TabCount++;
+        Tabs.Add(tab);
+
+        if (ActiveIndex == tab.Index)
+            ActivateTab(tab);
+
+        StateHasChanged();
+    }
+
+    public void ActivateTab(Tab tab)
+    {
+        ActiveIndex = tab.Index;
+    }
+
+}
