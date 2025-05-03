@@ -1,0 +1,59 @@
+@page "/tabpanel-demo"
+@using Microsoft.AspNetCore.Components.Rendering
+
+<h1 class="text-2xl font-bold mb-4">TabPanel Demo</h1>
+
+<h2 class="text-xl font-semibold mb-2">Declarative Tabs (Using Razor)</h2>
+<div class="mb-8">
+    <TabPanel>
+        <Tab Title="First Tab" IsActive="true">
+            <p class="text-gray-700">This is the content of the first tab.</p>
+        </Tab>
+        <Tab Title="Second Tab">
+            <p class="text-gray-700">This is the content of the second tab.</p>
+        </Tab>
+        <Tab Title="Third Tab">
+            <p class="text-gray-700">This is the content of the third tab.</p>
+        </Tab>
+    </TabPanel>
+</div>
+
+<h2 class="text-xl font-semibold mb-2">Programmatic Tabs (Using C#)</h2>
+<div>
+    <TabPanel @ref="programmaticTabPanel" />
+    <button @onclick="AddNewTab" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        Add New Tab
+    </button>
+</div>
+
+@code {
+    private TabPanel? programmaticTabPanel;
+    private int tabCounter = 1;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && programmaticTabPanel != null)
+        {
+            // Add initial tabs programmatically
+            AddTabProgrammatically("Tab 1", "This is the content of Tab 1 added via C# code.");
+            AddTabProgrammatically("Tab 2", "This is the content of Tab 2 added via C# code.");
+        }
+    }
+
+    private void AddNewTab()
+    {
+        tabCounter++;
+        AddTabProgrammatically($"Tab {tabCounter}", $"This is the content of Tab {tabCounter} added via C# code.");
+    }
+
+    private void AddTabProgrammatically(string title, string content)
+    {
+        programmaticTabPanel?.AddTab(title, builder =>
+        {
+            builder.OpenElement(0, "p");
+            builder.AddAttribute(1, "class", "text-gray-700");
+            builder.AddContent(2, content);
+            builder.CloseElement();
+        });
+    }
+}

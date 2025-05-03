@@ -1,5 +1,68 @@
-﻿<h3>TabPanel</h3>
+﻿@using Workshop.Models
+
+<div class="w-full">
+    <div class="flex border-b">
+        @foreach (var tab in Tabs)
+        {
+            <button @onclick="() => ActivateTab(tab)" 
+                    class="px-4 py-2 @(tab.IsActive ? "border-b-2 border-blue-500 font-medium text-blue-600" : "text-gray-500 hover:text-gray-700")">
+                @tab.Title
+            </button>
+        }
+    </div>
+    <div class="p-4">
+        @if (ActiveTab != null && ActiveTab.Content != null)
+        {
+            @ActiveTab.Content
+        }
+    </div>
+</div>
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
 
 @code {
+    [Parameter]
+    public List<TabItem> Tabs { get; set; } = new List<TabItem>();
 
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback<TabItem> OnTabChanged { get; set; }
+
+    private TabItem? ActiveTab => Tabs.FirstOrDefault(t => t.IsActive);
+
+    protected override void OnInitialized()
+    {
+        // Activate the first tab by default if none is active
+        if (Tabs.Count > 0 && !Tabs.Any(t => t.IsActive))
+        {
+            Tabs[0].IsActive = true;
+        }
+    }
+
+    private async Task ActivateTab(TabItem tab)
+    {
+        foreach (var t in Tabs)
+        {
+            t.IsActive = t.Id == tab.Id;
+        }
+
+        await OnTabChanged.InvokeAsync(tab);
+    }
+
+    public void AddTab(string title, RenderFragment content)
+    {
+        var tab = new TabItem
+        {
+            Title = title,
+            Content = content,
+            IsActive = Tabs.Count == 0 // First tab is active by default
+        };
+
+        Tabs.Add(tab);
+        StateHasChanged();
+    }
 }
