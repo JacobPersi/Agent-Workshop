@@ -1,7 +1,31 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="absolute w-full h-full bg-stone-950 overflow-none">
-    @Body
+
+<div class="absolute top-0 left-0 w-full h-full bg-gray-300 flex flex-col">
+
+    <div class="w-full h-16">
+        Header
+    </div>
+
+    <div class="grow flex flex-row">
+
+        <div class="h-full w-32 bg-blue-200">
+            Sidebar
+        </div>
+
+        <div class="flex-grow">
+            <TabPanel />
+        </div>
+
+        <div class="h-full w-100 bg-blue-200">
+            Sidebar
+        </div>
+    </div>
+
+    <div class="w-full h-6">
+        Footer
+    </div>
+
 </div>
 
 @code {

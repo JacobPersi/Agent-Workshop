@@ -1,0 +1,28 @@
+﻿@page "/diagram"
+
+@inject WorkflowService WorkflowService
+@inject DiagramService DiagramService
+
+<PageTitle>Diagram</PageTitle>
+
+<DiagramView @ref="_diagramView" />
+
+@code {
+    private DiagramView _diagramView { get; set; } = null!;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (_diagramView?.TryGetDiagram(out var diagram) == true)
+            {
+                var workflow = WorkflowService.LoadDefault();
+                DiagramService.LoadWorkflow(diagram, workflow);
+            }
+            else
+            {
+                Console.WriteLine("Failed to resolve diagram!");
+            }
+        }
+    }
+}
