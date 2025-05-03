@@ -1,20 +1,20 @@
 ﻿@inherits CustomComponent
 
 <!-- Tab Control Container -->
-<div class="w-full h-full flex flex-col border-1 rounded-lg overflow-clip">
+<div class="w-full h-full flex flex-col bg-neutral-900 border-1 border-neutral-600 rounded-lg overflow-clip">
   
     <!-- Tab Selection Bar -->
-    <div class="w-full h-10 flex flex-row border-b-1">
+    <div class="w-full h-10 flex flex-row border-b-1 border-neutral-600">
         @foreach (var tab in Tabs)
         {
-            <div class="flex-none px-4 py-2 border-r-1 @(ActiveIndex == tab.Index ? "bg-red-300" : "")" @onclick="() => ActivateTab(tab)">
+            <div class="flex-none px-4 py-2 border-r-1 border-neutral-600 @(ActiveIndex == tab.Index ? "bg-neutral-800" : "")" @onclick="() => ActivateTab(tab)">
                 @tab.Title
             </div>
         }
     </div>
 
     <!-- Tab Body -->
-    <div class="flex grow bg-purple-500">
+    <div class="flex grow">
         <CascadingValue Value="this">
             @ChildContent
         </CascadingValue>

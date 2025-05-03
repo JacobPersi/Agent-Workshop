@@ -1,6 +1,6 @@
 ﻿@inherits CustomComponent
 
-<div class="grow bg-blue-300 flex-col @(Parent?.ActiveIndex == Index ? "flex" : "hidden")">
+<div class="grow flex-col @(Parent?.ActiveIndex == Index ? "flex" : "hidden")">
     @ChildContent
 </div>
 
