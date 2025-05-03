@@ -1,0 +1,12 @@
+﻿@using Node = Workshop.Models.Abstract.Node
+
+<div class="bg-white p-4 rounded-xl">
+    @Node.Title
+</div>
+
+@code {
+
+    [Parameter]
+    public Node Node { get; set; } = null!;
+
+}

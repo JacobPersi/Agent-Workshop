@@ -1,0 +1,30 @@
+﻿@inject DiagramService DiagramService
+
+<div class="w-full h-full bg-red-200 ">
+    <CascadingValue Value="_diagram" IsFixed="true">
+        <DiagramCanvas></DiagramCanvas>
+    </CascadingValue>
+</div>
+
+@code {
+
+    private BlazorDiagram? _diagram { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        _diagram = new BlazorDiagram();
+
+        _diagram.RegisterComponent<LanguageNode, NodeWidget>();
+    }
+
+    public bool TryGetDiagram(out BlazorDiagram diagram)
+    {
+        if (_diagram != null)
+        {
+            diagram = _diagram;
+            return true;
+        }
+        diagram = null!;
+        return false;
+    }
+}
